@@ -1,15 +1,11 @@
 import './App.css';
-import PostList from './components/CountryList';
-import SelectedPost from './components/SelectedCountry';
+import Dashboard from './components/Dashboard';
 import React from "react";
 
 function App() {
   return (
     <div className="App">
-      <br/>
-      <SelectedPost/>
-      <br/>
-      <PostList/>
+      <Dashboard/>
     </div>
   );
 }
