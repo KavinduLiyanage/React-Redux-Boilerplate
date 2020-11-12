@@ -26,7 +26,6 @@ class Dashboard extends Component {
         }
         return (
             <div>
-                <h2>Calculate Distance Between Two Countries</h2>
                 <CountryDistance allCountries={this.props.allCountries} />
                 <h2>Countries List</h2>
                 {this.createListItems()}

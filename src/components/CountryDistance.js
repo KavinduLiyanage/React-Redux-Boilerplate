@@ -43,23 +43,32 @@ class CountryDistance extends Component {
 
     render() {
         return (
-            <div>
-                <label>Country 1</label>
-                <input type="text" placeholder="Enter Country" value={this.state.country1}
-                       onChange={this.country1Change}
-                />
-                <br/>
-                <label>Country 2</label>
-                <input type="text" placeholder="Enter Country" value={this.state.country2}
-                       onChange={this.country2Change}
-                />
-                <br/>
-                <button onClick={ () => this.findDistance(this.state.country1,this.state.country2) }><b>Calculate</b></button>
+            <div className="container">
+                <h2>Calculate Distance Between Two Countries</h2>
+                <div className="container">
+                    <div className="form-group">
+                        <label>Country 1</label>
+                        <input type="text" className="form-control" placeholder="Enter Country"
+                               value={this.state.country1}
+                               onChange={this.country1Change}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Country 2</label>
+                        <input type="text" className="form-control" placeholder="Enter Country"
+                               value={this.state.country2}
+                               onChange={this.country2Change}/>
+                    </div>
+                    <button className="btn btn-primary"
+                            onClick={() => this.findDistance(this.state.country1, this.state.country2)}>Calculate
+                    </button>
+                </div>
                 <br/>
                 <div>
                     {this.state.distance ? (
-                        <h2>Distance between {this.state.country1Name} and {this.state.country2Name} : {(this.state.distance/1000).toFixed(2)} KMs</h2>
-                    ) : ([])}
+                        <h2><span class="badge badge-success">Distance between {this.state.country1Name} and {this.state.country2Name} : {(this.state.distance/1000).toFixed(1)} KMs</span></h2>
+                    ) : (
+                        <br/>
+                    )}
                 </div>
             </div>
         );
