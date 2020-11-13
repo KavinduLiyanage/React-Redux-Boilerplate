@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import CountryList from "./CountryList";
 import NavBar from "./NavBar";
 import CountryDistance from "./CountryDistance";
+import CountryClosest from "./CountryClosest";
 function MainPage() {
     return (
         <React.Fragment>
@@ -14,6 +15,7 @@ function MainPage() {
                         <Route exact path = '/' component = { Dashboard }/>
                         <Route exact path = '/countryList' component = { CountryList }/>
                         <Route exact path = '/calculateDistance' component = { CountryDistance }/>
+                        <Route exact path = '/countryClosest' component = { CountryClosest }/>
                     </Switch>
                 </div>
             </BrowserRouter>

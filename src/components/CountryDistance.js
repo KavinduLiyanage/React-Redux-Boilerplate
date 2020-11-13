@@ -35,7 +35,7 @@ class CountryDistance extends Component {
     findDistance(country1,country2) {
 
         if (!this.state.country1 || !this.state.country2 ) {
-            return alert('Please fill all the fields')
+            return alert('Please enter countries')
         }
 
         const country1Result = _find(this.props.data, ['alpha3Code', country1]);
@@ -47,7 +47,7 @@ class CountryDistance extends Component {
         );
 
         this.setState({
-            distance: temp,
+            distance: (temp/1000).toFixed(1),
             country1Name:country1Result.name,
             country2Name:country2Result.name
         });
@@ -80,11 +80,11 @@ class CountryDistance extends Component {
                     </button>
                 </div>
                 <br/>
-                <div class="col text-center">
+                <div className="col text-center">
                     {this.state.distance ? (
                         <h2><span
-                            className="badge badge-success">Distance between {this.state.country1Name} and {this.state.country2Name} : {(
-                            this.state.distance / 1000).toFixed(1)} KMs</span></h2>
+                            className="badge badge-success">Distance between {this.state.country1Name} and {this.state.country2Name} : {
+                            this.state.distance} KMs</span></h2>
                     ) : (
                         <br/>
                     )}
@@ -103,7 +103,7 @@ function mapStateToProps(state) {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
-            requestApiData
+            requestApiData,
         },
         dispatch
     )

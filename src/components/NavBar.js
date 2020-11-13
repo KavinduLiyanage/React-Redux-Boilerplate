@@ -14,11 +14,14 @@ function NavBar() {
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Dashboard <span className="sr-only">(current)</span></a>
                         </li>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/countryList">Country List</a>
+                        </li>
                             <li className="nav-item active">
                             <a className="nav-link" href="/calculateDistance">Calculate Distance</a>
                         </li>
-                            <li className="nav-item active">
-                            <a className="nav-link" href="/countryList">Country List</a>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/countryClosest">Find Closest</a>
                         </li>
                     </ul>
                 </div>
