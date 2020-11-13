@@ -1,20 +1,9 @@
-import { FETCH_BUTTON_CLICKED, SELECT_COUNTRY } from "./types";
-import axios from 'axios';
+import { REQUEST_API_DATA, RECEIVE_API_DATA } from "./types";
 
-export const fetchCountries=()=> dispatch=>{
-    axios.get("https://restcountries.eu/rest/v2/all")
-    .then(res=>{
-      dispatch({
-        type:FETCH_BUTTON_CLICKED,
-        payload:res.data
-      })
-    })
-}
-
-export const selectCountry=(country)=>{
-    return{
-        type:SELECT_COUNTRY,
-        payload:country
-
-    }
-};
+export const requestApiData = () => ({
+    type: REQUEST_API_DATA
+});
+export const receiveApiData = data => ({
+    type: RECEIVE_API_DATA,
+    data
+});

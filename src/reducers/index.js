@@ -1,10 +1,7 @@
-import { combineReducers } from 'redux';
-import AllCountriesReducer from './reducer-AllCountry';
-import SelectedCountryReducer from './reducer-SelectedCountry';
+import { combineReducers } from "redux";
 
-const rootReducer=combineReducers({
-    allCountries:AllCountriesReducer,
-    selectedCountry:SelectedCountryReducer
-})
+import data from "./reducer-AllCountry";
 
-export default rootReducer;
+export default combineReducers({
+    data
+});

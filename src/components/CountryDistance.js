@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import _find from 'lodash.find';
 import getDistance from 'geolib/es/getDistance';
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {requestApiData} from "../actions/countryActions";
 
 class CountryDistance extends Component {
 
@@ -17,6 +20,10 @@ class CountryDistance extends Component {
         };
     };
 
+    componentDidMount() {
+        this.props.requestApiData();
+    };
+
     country1Change = event => {
         this.setState({ country1: event.target.value });
     };
@@ -26,8 +33,13 @@ class CountryDistance extends Component {
     };
 
     findDistance(country1,country2) {
-        const country1Result = _find(this.props.allCountries, ['alpha3Code', country1]);
-        const country2Result = _find(this.props.allCountries, ['alpha3Code', country2]);
+
+        if (!this.state.country1 || !this.state.country2 ) {
+            return alert('Please fill all the fields')
+        }
+
+        const country1Result = _find(this.props.data, ['alpha3Code', country1]);
+        const country2Result = _find(this.props.data, ['alpha3Code', country2]);
 
         let temp = getDistance(
             { latitude: country1Result.latlng[0], longitude: country1Result.latlng[1] },
@@ -44,28 +56,35 @@ class CountryDistance extends Component {
     render() {
         return (
             <div className="container">
-                <h2>Calculate Distance Between Two Countries</h2>
-                <div className="container">
+                <h3><span className="badge badge-dark">Calculate Distance Between Two Countries</span></h3>
+                <div className="container" style={{
+                    width: "50%",
+                    textAlign: "left"
+                }}>
                     <div className="form-group">
                         <label>Country 1</label>
-                        <input type="text" className="form-control" placeholder="Enter Country"
+                        <input type="text" className="form-control" placeholder="Enter 3 Letter Country Code"
                                value={this.state.country1}
                                onChange={this.country1Change}/>
                     </div>
                     <div className="form-group">
                         <label>Country 2</label>
-                        <input type="text" className="form-control" placeholder="Enter Country"
+                        <input type="text" className="form-control" placeholder="Enter 3 Letter Country Code"
                                value={this.state.country2}
                                onChange={this.country2Change}/>
                     </div>
-                    <button className="btn btn-primary"
+                </div>
+                <div>
+                    <button className="btn btn-primary btn-lg"
                             onClick={() => this.findDistance(this.state.country1, this.state.country2)}>Calculate
                     </button>
                 </div>
                 <br/>
-                <div>
+                <div class="col text-center">
                     {this.state.distance ? (
-                        <h2><span class="badge badge-success">Distance between {this.state.country1Name} and {this.state.country2Name} : {(this.state.distance/1000).toFixed(1)} KMs</span></h2>
+                        <h2><span
+                            className="badge badge-success">Distance between {this.state.country1Name} and {this.state.country2Name} : {(
+                            this.state.distance / 1000).toFixed(1)} KMs</span></h2>
                     ) : (
                         <br/>
                     )}
@@ -75,4 +94,19 @@ class CountryDistance extends Component {
     }
 }
 
-export default CountryDistance;
+function mapStateToProps(state) {
+    return{
+        data: state.data
+    }
+}
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators(
+        {
+            requestApiData
+        },
+        dispatch
+    )
+}
+
+export default connect(mapStateToProps,matchDispatchToProps)(CountryDistance);
