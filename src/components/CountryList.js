@@ -12,19 +12,21 @@ class CountryList extends Component {
     createListItems() {
         return this.props.data.map((country)=>{
             return(
-            <li key={country.name} >{country.name} - {country.alpha3Code}</li>
+            <li className="list-group-item" key={country.name} >{country.name} - {country.alpha3Code}</li>
             )
         })
     };
 
     render() {
         return this.props.data.length ?
-            <div>
+            <div className="container" style={{
+                width: "70%"
+            }}>
                 <h3><span className="badge badge-dark">Countries List</span></h3>
 
-                <div>
+                <ul className="list-group">
                     {this.createListItems()}
-                </div>
+                </ul>
             </div>
             : <h1>loading...</h1>;
     }

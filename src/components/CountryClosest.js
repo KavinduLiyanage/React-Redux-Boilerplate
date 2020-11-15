@@ -10,6 +10,8 @@ class CountryClosest extends Component {
     constructor(props) {
         super(props);
 
+        this.props.requestApiData();
+
         this.state = {
             countries:[],
             countryInput:"",
@@ -18,8 +20,6 @@ class CountryClosest extends Component {
             countryClosestDistance:0,
             distances:[],
         };
-
-        this.props.requestApiData();
 
     };
 
@@ -70,12 +70,11 @@ class CountryClosest extends Component {
     };
 
     render() {
-
         return (
             <div className="container">
                 <h3><span className="badge badge-dark">Find Closest Country</span></h3>
                 <div className="container" style={{
-                    width: "50%",
+                    width: "60%",
                     textAlign: "left"
                 }}>
                     <div className="form-group">

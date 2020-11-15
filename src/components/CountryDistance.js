@@ -58,7 +58,7 @@ class CountryDistance extends Component {
             <div className="container">
                 <h3><span className="badge badge-dark">Calculate Distance Between Two Countries</span></h3>
                 <div className="container" style={{
-                    width: "50%",
+                    width: "60%",
                     textAlign: "left"
                 }}>
                     <div className="form-group">

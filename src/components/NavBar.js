@@ -23,6 +23,9 @@ function NavBar() {
                         <li className="nav-item active">
                             <a className="nav-link" href="/countryClosest">Find Closest</a>
                         </li>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/countrySearch">Search Country</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
