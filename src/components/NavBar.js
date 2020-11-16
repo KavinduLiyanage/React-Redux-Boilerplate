@@ -17,7 +17,7 @@ function NavBar() {
                         <li className="nav-item active">
                             <a className="nav-link" href="/countryList">Country List</a>
                         </li>
-                            <li className="nav-item active">
+                        <li className="nav-item active">
                             <a className="nav-link" href="/calculateDistance">Calculate Distance</a>
                         </li>
                         <li className="nav-item active">
@@ -25,6 +25,9 @@ function NavBar() {
                         </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="/countrySearch">Search Country</a>
+                        </li>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/countryTimeZone">Timezone Search</a>
                         </li>
                     </ul>
                 </div>

@@ -6,6 +6,7 @@ import NavBar from "./NavBar";
 import CountryDistance from "./CountryDistance";
 import CountryClosest from "./CountryClosest";
 import CountrySearch from "./CountrySearch";
+import CountryTimeZone from "./CountryTimeZone";
 function MainPage() {
     return (
         <React.Fragment>
@@ -18,6 +19,7 @@ function MainPage() {
                         <Route exact path = '/calculateDistance' component = { CountryDistance }/>
                         <Route exact path = '/countryClosest' component = { CountryClosest }/>
                         <Route exact path = '/countrySearch' component = { CountrySearch }/>
+                        <Route exact path = '/countryTimeZone' component = { CountryTimeZone }/>
                     </Switch>
                 </div>
             </BrowserRouter>
