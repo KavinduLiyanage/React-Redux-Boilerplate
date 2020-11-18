@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from "redux";
 import {requestApiData} from "../actions/countryActions";
 import {connect} from "react-redux";
-import _sortBy from 'lodash.sortby';
+import {findTimezones} from "../helpers/helper-Functions";
 
 class CountryTimeZone extends Component {
     constructor(props) {
@@ -25,59 +25,17 @@ class CountryTimeZone extends Component {
         this.setState({ timeZone2: event.target.value });
     };
 
-    findCountries(timeZone1,timeZone2) {
+    findTimezoneOnClick(timeZone1,timeZone2) {
 
         if ((timeZone1-timeZone2)===0) {
             return alert('Please enter valid timezones')
         }
 
-        let minTimeZone = timeZone1;
-        let maxTimeZone = timeZone2;
-
-        if(minTimeZone>maxTimeZone) {
-            minTimeZone = timeZone2;
-            maxTimeZone = timeZone1;
-        }
-
-        let filteredData = [];
-
-        this.props.data.map((data) => {
-            (
-                data.timezones.map((item) => {
-
-                    let temp = item.replace(':', '.');
-                    temp = parseFloat(temp.replace('UTC', ''));
-                    if((minTimeZone < temp) && (maxTimeZone > temp)) {
-
-                        let obj = {
-                            name : data.name,
-                            timeZone: item,
-                            timeZoneFloat: temp
-                        };
-                        filteredData.push(obj);
-
-                    }
-                    return filteredData;
-                })
-            )
-            return filteredData;
-        });
-
-        const unique = filteredData
-            .map(e => e['name'])
-
-            // store the keys of the unique objects
-            .map((e, i, final) => final.indexOf(e) === i && i)
-
-            // eliminate the dead keys & store unique objects
-            .filter(e => filteredData[e]).map(e => filteredData[e]);
-
-        const sortUniqueCountries = _sortBy(unique, ['timeZoneFloat']);
+        const result = findTimezones(timeZone1,timeZone2);
 
         this.setState({
-            filteredCountries: sortUniqueCountries
+            filteredCountries: result
         });
-
     }
 
     render() {
@@ -104,7 +62,7 @@ class CountryTimeZone extends Component {
                 </div>
                 <div>
                     <button className="btn btn-primary btn-lg"
-                            onClick={() => this.findCountries(parseFloat(this.state.timeZone1),parseFloat(this.state.timeZone2) )}>Find
+                            onClick={() => this.findTimezoneOnClick(parseFloat(this.state.timeZone1),parseFloat(this.state.timeZone2) )}>Find
                     </button>
                 </div>
                 <br/>
@@ -127,12 +85,6 @@ class CountryTimeZone extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return{
-        data: state.data
-    }
-}
-
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
@@ -142,4 +94,4 @@ function matchDispatchToProps(dispatch) {
     )
 }
 
-export default connect(mapStateToProps,matchDispatchToProps)(CountryTimeZone);
+export default connect(null,matchDispatchToProps)(CountryTimeZone);

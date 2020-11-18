@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from "redux";
 import {requestApiData} from "../actions/countryActions";
 import {connect} from "react-redux";
+import {searchCountries} from "../helpers/helper-Functions";
 
 class CountrySearch extends Component {
     constructor(props) {
@@ -19,16 +20,15 @@ class CountrySearch extends Component {
         this.setState({ search: e.target.value });
     };
 
-    findCountries(search) {
+    searchOnClick(search) {
 
         if (!search) {
             return alert('Please enter search keyword')
         }
-        const filteredCountries = this.props.data.filter(country => {
-            return country.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
-        });
 
-        this.setState({ filteredCountries: filteredCountries });
+        const result = searchCountries(search);
+
+        this.setState({ filteredCountries: result });
     }
 
     render() {
@@ -51,7 +51,7 @@ class CountrySearch extends Component {
                     </div>
                     <div>
                         <button className="btn btn-primary btn-lg"
-                                onClick={() => this.findCountries(this.state.search)}>Search
+                                onClick={() => this.searchOnClick(this.state.search)}>Search
                         </button>
                     </div>
                     <br/>
@@ -94,12 +94,6 @@ class CountrySearch extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return{
-        data: state.data
-    }
-}
-
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
@@ -109,4 +103,4 @@ function matchDispatchToProps(dispatch) {
     )
 }
 
-export default connect(mapStateToProps,matchDispatchToProps)(CountrySearch);
+export default connect(null,matchDispatchToProps)(CountrySearch);

@@ -1,27 +1,21 @@
 import React, {Component} from 'react';
-import _find from 'lodash.find';
-import getDistance from 'geolib/es/getDistance';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {requestApiData} from "../actions/countryActions";
+import {findDistance} from "../helpers/helper-Functions";
 
 class CountryDistance extends Component {
-
     constructor(props) {
         super(props);
 
+        this.props.requestApiData();
         this.state = {
-            countries:[],
             country1:"",
             country2:"",
             country1Name:"",
             country2Name:"",
             distance:0
         };
-    };
-
-    componentDidMount() {
-        this.props.requestApiData();
     };
 
     country1Change = event => {
@@ -32,26 +26,20 @@ class CountryDistance extends Component {
         this.setState({ country2: event.target.value });
     };
 
-    findDistance(country1,country2) {
+    calculateOnClick(country1,country2) {
 
-        if (!this.state.country1 || !this.state.country2 ) {
+        if (!country1 || !country2 ) {
             return alert('Please enter countries')
         }
 
-        const country1Result = _find(this.props.data, ['alpha3Code', country1]);
-        const country2Result = _find(this.props.data, ['alpha3Code', country2]);
-
-        let temp = getDistance(
-            { latitude: country1Result.latlng[0], longitude: country1Result.latlng[1] },
-            { latitude: country2Result.latlng[0], longitude: country2Result.latlng[1] }
-        );
+        const result = findDistance(country1, country2);
 
         this.setState({
-            distance: (temp/1000).toFixed(1),
-            country1Name:country1Result.name,
-            country2Name:country2Result.name
+            distance: result.distance,
+            country1Name:result.country1Name,
+            country2Name:result.country2Name
         });
-    };
+    }
 
     render() {
         return (
@@ -76,7 +64,7 @@ class CountryDistance extends Component {
                 </div>
                 <div>
                     <button className="btn btn-primary btn-lg"
-                            onClick={() => this.findDistance(this.state.country1, this.state.country2)}>Calculate
+                            onClick={() => this.calculateOnClick(this.state.country1, this.state.country2)}>Calculate
                     </button>
                 </div>
                 <br/>
@@ -94,12 +82,6 @@ class CountryDistance extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return{
-        data: state.data
-    }
-}
-
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
@@ -109,4 +91,4 @@ function matchDispatchToProps(dispatch) {
     )
 }
 
-export default connect(mapStateToProps,matchDispatchToProps)(CountryDistance);
+export default connect(null,matchDispatchToProps)(CountryDistance);
