@@ -20,6 +20,10 @@ class CountrySearch extends Component {
     };
 
     findCountries(search) {
+
+        if (!search) {
+            return alert('Please enter search keyword')
+        }
         const filteredCountries = this.props.data.filter(country => {
             return country.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
         });

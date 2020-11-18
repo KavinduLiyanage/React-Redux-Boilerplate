@@ -60,6 +60,7 @@ class CountryClosest extends Component {
                     }
                 }
             }
+            return min;
         });
 
         this.setState({

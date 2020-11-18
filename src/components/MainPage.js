@@ -7,6 +7,8 @@ import CountryDistance from "./CountryDistance";
 import CountryClosest from "./CountryClosest";
 import CountrySearch from "./CountrySearch";
 import CountryTimeZone from "./CountryTimeZone";
+import PrivateRoute from "./Login/PrivateRoute";
+import Login from "./Login/Login";
 function MainPage() {
     return (
         <React.Fragment>
@@ -14,12 +16,13 @@ function MainPage() {
                 <NavBar/>
                 <div className="container" style={{ maxWidth: "60%", marginTop: 30}}>
                     <Switch>
-                        <Route exact path = '/' component = { Dashboard }/>
-                        <Route exact path = '/countryList' component = { CountryList }/>
-                        <Route exact path = '/calculateDistance' component = { CountryDistance }/>
-                        <Route exact path = '/countryClosest' component = { CountryClosest }/>
-                        <Route exact path = '/countrySearch' component = { CountrySearch }/>
-                        <Route exact path = '/countryTimeZone' component = { CountryTimeZone }/>
+                        <Route exact path = '/login' component = { Login }/>
+                        <PrivateRoute exact path = '/' component = { Dashboard }/>
+                        <PrivateRoute exact path = '/countryList' component = { CountryList }/>
+                        <PrivateRoute exact path = '/calculateDistance' component = { CountryDistance }/>
+                        <PrivateRoute exact path = '/countryClosest' component = { CountryClosest }/>
+                        <PrivateRoute exact path = '/countrySearch' component = { CountrySearch }/>
+                        <PrivateRoute exact path = '/countryTimeZone' component = { CountryTimeZone }/>
                     </Switch>
                 </div>
             </BrowserRouter>

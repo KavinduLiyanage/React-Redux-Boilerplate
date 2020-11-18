@@ -27,6 +27,10 @@ class CountryTimeZone extends Component {
 
     findCountries(timeZone1,timeZone2) {
 
+        if ((timeZone1-timeZone2)===0) {
+            return alert('Please enter valid timezones')
+        }
+
         let minTimeZone = timeZone1;
         let maxTimeZone = timeZone2;
 
@@ -78,10 +82,11 @@ class CountryTimeZone extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container" style={{
+                width: "60%",
+            }}>
                 <h3><span className="badge badge-dark">Find Countries using Timezones</span></h3>
                 <div className="container" style={{
-                    width: "60%",
                     textAlign: "left"
                 }}>
                     <div className="form-group">
