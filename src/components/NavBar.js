@@ -27,46 +27,43 @@ class NavBar extends Component {
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"/>
                     </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/">Dashboard <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/countryList">Country List</a>
-                            </li>
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/calculateDistance">Calculate Distance</a>
-                            </li>
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/countryClosest">Find Closest</a>
-                            </li>
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/countrySearch">Search Country</a>
-                            </li>
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/countryTimeZone">Timezone Search</a>
-                            </li>
-                        </ul>
-                        <ul className="navbar-nav ml-md-auto">
-                            <li className="nav-item active">
-                                {this.state.isLogin ? (
-                                    <div>
-                                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                                        <span className="badge badge-light">
-                                                <Link to="" onClick={() => this.handleLogout()}>
-                                                    Logout
-                                                </Link>
-                                                    </span>
-                                    </div>
-                                ) : (
-                                    <span style={{ display: "none" }}> Empty </span>
-                                )}
-                            </li>
-                            <br />
-                            <li className="nav-item dropdown"></li>
-                        </ul>
-                    </div>
+                    {this.state.isLogin ? (
+                        <div className="collapse navbar-collapse" id="navbarNav">
+                            <ul className="navbar-nav">
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/">Dashboard <span
+                                        className="sr-only">(current)</span></a>
+                                </li>
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/countryList">Country List</a>
+                                </li>
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/calculateDistance">Calculate Distance</a>
+                                </li>
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/countryClosest">Find Closest</a>
+                                </li>
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/countrySearch">Search Country</a>
+                                </li>
+                                <li className="nav-item active">
+                                    <a className="nav-link" href="/countryTimeZone">Timezone Search</a>
+                                </li>
+                            </ul>
+                            <ul className="navbar-nav ml-md-auto">
+                                <li className="nav-item active">
+                                    <span className="badge badge-light">
+                                        <Link to="" onClick={() => this.handleLogout()}>
+                                            Logout
+                                        </Link>
+                                    </span>
+                                </li>
+                                <br/>
+                            </ul>
+                        </div>
+                    ) : (
+                        <span style={{ display: "none" }}> Empty </span>
+                    )}
                 </nav>
             </div>
         );

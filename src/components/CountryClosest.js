@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {requestApiData} from "../actions/countryActions";
 import {findClosest} from "../helpers/helper-Functions";
+import * as Yup from "yup";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 
 class CountryClosest extends Component {
 
@@ -12,7 +14,6 @@ class CountryClosest extends Component {
         this.props.requestApiData();
 
         this.state = {
-            countryInput:"",
             countryInputName:"",
             countryClosestName:"",
             countryClosestDistance:0
@@ -20,15 +21,7 @@ class CountryClosest extends Component {
 
     };
 
-    countryInputChange = event => {
-        this.setState({ countryInput: event.target.value });
-    };
-
     findOnClick(country1) {
-
-        if (!this.state.countryInput) {
-            return alert('Please enter country')
-        }
 
         const result = findClosest(country1);
 
@@ -41,25 +34,49 @@ class CountryClosest extends Component {
 
     render() {
         return (
-            <div className="container">
-                <h3><span className="badge badge-dark">Find Closest Country</span></h3>
-                <div className="container" style={{
-                    width: "60%",
-                    textAlign: "left"
-                }}>
-                    <div className="form-group">
-                        <label>Enter Country </label>
-                        <input type="text" className="form-control" placeholder="Enter 3 Letter Country Code"
-                               value={this.state.countryInput}
-                               onChange={this.countryInputChange}/>
-                    </div>
-                </div>
-                <div>
-                    <button className="btn btn-primary btn-lg"
-                            onClick={() => this.findOnClick(this.state.countryInput)}>Find
-                    </button>
-                </div>
-                <br/>
+            <div>
+                <Formik
+                    initialValues={{
+                        country1: ''
+                    }}
+                    validationSchema={Yup.object().shape({
+                        country1: Yup.string()
+                            .max(3, 'Must be exactly 3 characters')
+                            .min(3, 'Must be exactly 3 characters')
+                            .required('Country is required')
+                    })}
+                    onSubmit={fields => {
+                        try {
+                            this.findOnClick(fields.country1.toUpperCase());
+                        } catch (e) {
+                            alert("Invalid Country Code");
+                            this.setState({
+                                countryClosestName: "",
+                                countryClosestDistance:"",
+                                countryInputName:""
+                            });
+                        }
+                    }}
+                >
+                    {({ errors, touched }) => (
+                        <Form>
+                            <h3><span className="badge badge-dark">Find Closest Country</span></h3>
+                            <div className="container" style={{
+                                maxWidth: "350px", minWidth: "300px",
+                                textAlign: "left"
+                            }}>
+                                <div className="form-group">
+                                    <label htmlFor="country1">Country</label>
+                                    <Field name="country1" type="text" placeholder="Enter 3 Letter Country Code" className={'form-control' + (errors.country1 && touched.country1 ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="country1" component="div" className="invalid-feedback" />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary btn-lg mr-2">Find</button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
                 <div className="col text-center">
                     {this.state.countryClosestDistance ? (
                         <h2><span

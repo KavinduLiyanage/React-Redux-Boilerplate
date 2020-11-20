@@ -1,58 +1,53 @@
 import React from 'react';
 import { login } from "./Auth";
+import * as Yup from 'yup';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 
 //Login page of the System
 export default class Login extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.onSubmit = this.onSubmit.bind(this);
-
-        this.state = {
-            email: "",
-            password: "",
-        };
-    }
-
-    updateInput(key, value) {
-        this.setState({
-            [key]: value,
-        });
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        login(this.state.email, this.state.password);
-        window.location = "/";
-
-    }
-
     render() {
         return (
-            <div className="container" style={{ maxWidth: "400px"}}>
-                <div className=" h-100" >
+            <div className="container" style={{maxWidth: "400px"}}>
+                <div className=" h-100">
                     <h3>Login</h3>
-                            <form style={{textAlign: "left"}} onSubmit={this.onSubmit}>
+                    <Formik
+                        initialValues={{
+                            email: '',
+                            password: ''
+                        }}
+                        validationSchema={Yup.object().shape({
+                            email: Yup.string()
+                                .email('Email is invalid')
+                                .required('Email is required'),
+                            password: Yup.string()
+                                .min(6, 'Password must be at least 6 characters')
+                                .required('Password is required')
+                        })}
+                        onSubmit={fields => {
+                            login(fields.email, fields.password);
+                            window.location = "/";
+                        }}
+                    >
+                        {({errors, touched}) => (
+                            <Form style={{textAlign: "left"}}>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputEmail1">Email address</label>
-                                    <input type="email" className="form-control" placeholder="Email"
-                                           value={this.state.email}
-                                           onChange={(e) => this.updateInput("email", e.target.value)}
-                                           required/>
+                                    <label htmlFor="email">Email</label>
+                                    <Field name="email" type="text" className={'form-control' + (
+                                        errors.email && touched.email ? ' is-invalid' : '')}/>
+                                    <ErrorMessage name="email" component="div" className="invalid-feedback"/>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="exampleInputPassword1">Password</label>
-                                    <input type="password" className="form-control"  placeholder="password"
-                                           value={this.state.password}
-                                           onChange={(e) =>
-                                               this.updateInput("password", e.target.value)
-                                           }
-                                           required/>
+                                    <label htmlFor="password">Password</label>
+                                    <Field name="password" type="password" className={'form-control' + (
+                                        errors.password && touched.password ? ' is-invalid' : '')}/>
+                                    <ErrorMessage name="password" component="div" className="invalid-feedback"/>
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">Login</button>
-                            </form>
-                        <br/>
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary btn-block mr-2">Login</button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         );

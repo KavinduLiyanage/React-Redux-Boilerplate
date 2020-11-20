@@ -1,20 +1,16 @@
 //All the security authentication contains here
 const User_EMAIL = "kavindu@orelit.com";
-const User_PASSWORD = "1234";
+const User_PASSWORD = "123456";
 const TOKEN_EMAIL = "";
-
 
 //Login validation
 export const login = (email, password) => {
     if ((User_EMAIL===email) && (User_PASSWORD===password)) {
         try {
-            //Check token is valid in this try catch block.
             //If this fails user will be not loged on
-
             localStorage.setItem(TOKEN_EMAIL, email);
-
         } catch (e) {
-            console.log("Token Not Valid");
+            console.log("Email Not Valid");
         }
     }
     else
